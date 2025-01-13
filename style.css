@@ -1,0 +1,348 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #eee;
+    background-color: #111; /* Darker background for better contrast */
+    line-height: 1.6; /* Improved readability */
+}
+
+.container {
+    max-width: 960px; /* More standard container width */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+section {
+    padding: 60px 0; /* Increased padding for better spacing */
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #eee; /* Slightly off-white for softer look */
+    border-bottom: 1px solid #333; /* Darker border */
+    overflow: hidden; /* Prevents margin collapse issues */
+}
+
+section.hidden {
+    display: none;
+}
+
+section.visible {
+    display: block;
+    animation: fadeIn 1s ease-out; /* Apply animation only when visible */
+}
+
+header {
+    background-color: rgba(0, 0, 0, 0.8); /* Slightly darker header */
+    padding: 20px 0;
+    border-bottom: 1px solid #333;
+    position: sticky; /* Make header sticky */
+    top: 0;
+    z-index: 100; /* Ensure header stays on top */
+}
+
+.header .container { /* Added container to header for consistent width */
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem; /* Use rem for better scaling */
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+}
+
+.logo-highlight { /* More descriptive class name */
+    color: #007bff;
+}
+
+.navbar .nav-list { /* More specific selector */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-end; /* Align nav to the right */
+}
+
+.navbar .nav-list li {
+    margin-left: 20px; /* Use margin-left for consistent spacing */
+}
+
+.navbar .nav-list a {
+    text-decoration: none;
+    color: #ddd; /* Slightly off-white nav links */
+    font-weight: 500; /* Slightly lighter font-weight */
+    transition: color 0.3s ease;
+}
+
+.navbar .nav-list a:hover {
+    color: #007bff;
+}
+
+footer {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px 0;
+    text-align: center;
+    border-top: 1px solid #333;
+    color: #ddd;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.9); /* Start slightly larger */
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Responsive Image */
+.responsive-image {
+    max-width: 80%;
+    height: auto;
+    display: block;
+    position: relative;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Softer shadow */
+}
+
+/* Intro Section */
+#home .intro-content {
+    display: flex;
+    align-items: center;
+    gap: 30px; /* Use gap for consistent spacing */
+}
+
+#home .text-content {
+    flex: 1;
+}
+
+#home .image-content {
+    flex-shrink: 0;
+}
+
+#home .responsive-image {
+    max-width: 300px; /* Increased max-width */
+}
+
+.heading { /* More semantic class name */
+    font-size: 3rem; /* Adjusted font size */
+    color: #fff;
+    margin-bottom: 1rem;
+    animation: zoomIn 1s ease-out; /* Apply animation to heading */
+}
+
+.description { /* More semantic class name */
+    font-size: 1.2rem;
+    color: #ddd;
+}
+
+.highlight { /* Simplified class name */
+    color: #007bff;
+    font-weight: 600;
+}
+
+/* About Section */
+#about .container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Service Section */
+#services .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#services h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    color: #007bff;
+}
+
+.services-grid { /* More descriptive class name */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Use grid for responsiveness */
+    gap: 30px;
+}
+
+.service-item {
+    background: rgba(255, 255, 255, 0.08); /* Adjusted background color */
+    padding: 30px;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smoother transitions */
+    border: 1px solid transparent; /*For hover effect*/
+}
+
+.service-item h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.service-item:hover {
+    background: rgba(0, 123, 255, 0.9); /* Slightly transparent blue on hover */
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
+    border: 1px solid #007bff;
+}
+
+/* Contact Section */
+.contact {
+    padding: 60px 0;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.contact h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    color: #007bff;
+}
+
+.contact-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.contact-item {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 20px;
+    border-radius: 8px;
+    min-width: 280px;
+    text-align: center;
+}
+
+.contact-item h3 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.contact-item a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-item a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.contact-form {
+    max-width: 500px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 30px;
+    border-radius: 8px;
+}
+
+.contact-form h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: #ccc3c3;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #faf1f1;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #444
+}
+
+.contact-form button {
+    margin-top: 20px; /* Increased margin */
+    padding: 12px 20px; /* Increased padding for a larger button */
+    background-color: #007bff;
+    color: #d6afaf;
+    border: none;
+    border-radius: 6px; /* Slightly more rounded corners */
+    cursor: pointer;
+    font-size: 1rem; /* Increased font size */
+    font-weight: 500; /* Added font weight */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform transition */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Added subtle shadow */
+}
+
+.contact-form button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Increased shadow on hover */
+}
+
+.contact-form button:active { /* Style for when the button is clicked */
+    transform: translateY(0); /* Reset transform */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Reduced shadow on click */
+}
+
+/* Optional: Add focus styles for accessibility */
+.contact-form button:focus {
+    outline: 2px solid #007bff; /* Add an outline */
+    outline-offset: 2px; /* Offset the outline */
+}
+
+/* Styles for success and error messages */
+#response-message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 500;
+}
+
+#response-message.success-message {
+    background-color: rgba(0, 128, 0, 0.1); /* Light green background */
+    color: green;
+    border: 1px solid green;
+}
+
+#response-message.error-message {
+    background-color: rgba(255, 0, 0, 0.1); /* Light red background */
+    color: red;
+    border: 1px solid red;
+}
+
+/* Underline all links in the nav-list */
+.nav-list a {
+    text-decoration: underline; /* Explicitly add underline */
+  }
+  
+  /* Customize the underline (color, style, thickness) */
+  .nav-list a {
+    text-decoration: underline;
+    text-decoration-color: blue; /* Change underline color */
+    text-decoration-style: wavy; /* Change underline style (e.g., wavy, dotted) */
+    text-decoration-thickness: 2px; /* Change underline thickness */
+  }
+  
+  /* Underline on hover only */
+  .nav-list a:hover {
+    text-decoration: underline;
+  }
+
+  
