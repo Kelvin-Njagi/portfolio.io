@@ -762,6 +762,40 @@ section.visible {
     margin-bottom: 4rem;
 }
 
+/* Keep about image on the right on narrower screens to match laptop layout */
+@media (max-width: 768px) {
+    .about-grid {
+        grid-template-columns: 1fr 300px;
+        gap: var(--spacing-md);
+        align-items: start;
+    }
+
+    .about-text {
+        order: 0;
+    }
+
+    .about-image {
+        order: 0;
+        display: block;
+        justify-self: end;
+        align-self: start;
+        margin-top: 0;
+    }
+
+    .about-image img {
+        width: 100%;
+        max-width: 280px;
+        height: auto;
+        border-radius: 12px;
+        object-fit: cover;
+    }
+
+    /* Reduce padding so text and image fit nicely on small widths */
+    .about-text p {
+        margin-bottom: var(--spacing-sm);
+    }
+}
+
 .about-text h3 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
@@ -1389,7 +1423,10 @@ section.visible {
 .footer-social-links {
     display: flex;
     gap: 1rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
 }
 
 .footer-social-links a {
@@ -1426,6 +1463,211 @@ section.visible {
 
 .footer-bottom i {
     color: var(--accent-color);
+}
+
+/* ============================
+   FOOTER - RESPONSIVE (MOBILE) TWEAKS
+   ============================ */
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 2rem 0 1rem;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+        text-align: center;
+    }
+
+    .footer-section {
+        padding: 0 var(--spacing-md);
+    }
+
+    .footer-section h3,
+    .footer-section h4 {
+        text-align: center;
+    }
+
+    .footer-section ul {
+        display: inline-block;
+        text-align: left;
+        margin: 0 auto;
+    }
+
+    .footer-social-links {
+        justify-content: center;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-sm);
+    }
+
+    .footer-social-links a {
+        width: 48px;
+        height: 48px;
+        font-size: 1.05rem;
+    }
+
+    .footer-bottom {
+        padding-top: 1.2rem;
+    }
+
+    .footer-bottom p {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 1.5rem 0 1rem;
+    }
+
+    .footer-content {
+        gap: var(--spacing-sm);
+    }
+
+    .footer-section ul {
+        text-align: center;
+    }
+
+    .footer-social-links a {
+        width: 56px;
+        height: 56px;
+        font-size: 1.1rem;
+    }
+
+    .footer-section p,
+    .footer-bottom p {
+        font-size: 0.92rem;
+    }
+}
+
+/* Extra small screen tweaks for better phone layout */
+@media (max-width: 480px) {
+    /* Ensure all major grids collapse to single column */
+    .projects-grid,
+    .services-grid,
+    .documents-grid,
+    .skills-container,
+    .interests-grid,
+    .journey-grid {
+        grid-template-columns: 1fr !important;
+        gap: var(--spacing-md) !important;
+    }
+
+    /* Reduce section padding to fit small screens */
+    section {
+        padding: var(--spacing-lg) 0 !important;
+    }
+
+    /* Make hero content comfortably stacked */
+    .hero .container {
+        padding: 0 var(--spacing-sm);
+    }
+
+    .heading {
+        font-size: 1.6rem !important;
+    }
+
+    .description,
+    .journey-text,
+    .document-card p,
+    .interest-card p,
+    .about-text p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    /* Increase touch target sizes */
+    .btn,
+    .btn-compact,
+    .footer-social-links a {
+        min-height: 48px;
+        padding: 12px 16px;
+        border-radius: 12px;
+    }
+
+    /* Ensure project image heights scale down */
+    .project-image {
+        height: 180px;
+    }
+
+    /* Contact form spacing */
+    .contact-form {
+        padding: 1.5rem !important;
+    }
+
+    /* Hide decorative hero pseudo element on small phones */
+    .hero::before {
+        display: none;
+    }
+}
+
+/* Phone layout: Quick Links left, Services right (grid areas for stability) */
+@media (max-width: 480px) {
+    .footer-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "brand brand"
+            "links services"
+            "connect connect";
+        gap: var(--spacing-md);
+        align-items: start;
+    }
+
+    .footer-content .footer-section:nth-child(1) { grid-area: brand; }
+    .footer-content .footer-section:nth-child(2) { grid-area: links; }
+    .footer-content .footer-section:nth-child(3) { grid-area: services; }
+    .footer-content .footer-section:nth-child(4) { grid-area: connect; }
+
+    /* Brand spans full width on top */
+    .footer-content .footer-section:nth-child(1) {
+        text-align: left;
+        padding-bottom: var(--spacing-sm);
+    }
+
+    /* Quick Links left column */
+    .footer-content .footer-section:nth-child(2) {
+        text-align: left;
+    }
+
+    /* Services right column */
+    .footer-content .footer-section:nth-child(3) {
+        text-align: right;
+    }
+
+    /* Connect spans full width below */
+    .footer-content .footer-section:nth-child(4) {
+        text-align: center;
+        margin-top: var(--spacing-sm);
+    }
+
+    /* Ensure lists align visually within their columns */
+    .footer-content .footer-section:nth-child(2) ul {
+        text-align: left;
+        display: block;
+        margin: 0;
+    }
+
+    .footer-content .footer-section:nth-child(3) ul {
+        text-align: right;
+        display: block;
+        margin: 0;
+    }
+
+    /* Keep contact icons horizontal on phones; allow horizontal scroll if needed */
+    .footer-content .footer-section:nth-child(4) .footer-social-links {
+        justify-content: center;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: var(--spacing-sm);
+    }
+
+    .footer-content .footer-section:nth-child(4) .footer-social-links a {
+        flex: 0 0 auto;
+        margin-right: var(--spacing-sm);
+    }
 }
 
 /* ============================
