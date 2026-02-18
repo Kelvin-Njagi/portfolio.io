@@ -268,25 +268,11 @@ app.use((err, req, res, next) => {
 // START SERVER
 // ============================
 
-app.listen(PORT, process.env.HOST || 'localhost', () => {
-    console.log(`
-    ╔═══════════════════════════════════╗
-    ║   Portfolio Website Backend       ║
-    ╚═══════════════════════════════════╝
-    
-    🚀 Server is running...
-    📍 URL: http://localhost:${PORT}
-    🔧 Environment: ${process.env.NODE_ENV || 'development'}
-    
-    Available Endpoints:
-    - GET    /health              - Health check
-    - GET    /api/portfolio        - Portfolio information
-    - GET    /api/projects         - List of projects
-    - GET    /api/services         - List of services
-    - POST   /api/contact          - Contact form submission
-    
-    Press Ctrl+C to stop the server
-    `);
+// Use PORT from environment (platforms like Render provide this)
+const port = process.env.PORT || PORT || 3000;
+
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Server running on port ${port}`);
 });
 
 // Handle unhandled promise rejections
