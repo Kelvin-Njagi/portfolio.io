@@ -756,7 +756,11 @@ section.visible {
 
 .about-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    /* Keep a stable two-column layout where the image column is constrained
+       so the image never becomes oversized on wider screens. The minmax
+       keeps the image column flexible between a comfortable width and a
+       maximum so it looks good on tablets and desktops. */
+    grid-template-columns: 1fr minmax(260px, 360px);
     gap: 4rem;
     align-items: start;
     margin-bottom: 4rem;
@@ -1029,14 +1033,17 @@ section.visible {
 
 .about-image {
     position: relative;
+    justify-self: end;
 }
 
 .about-image img {
     width: 100%;
+    max-width: 360px;
     border-radius: 15px;
     overflow: hidden;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow);
+    display: block;
 }
 
 /* ============================
@@ -1385,11 +1392,20 @@ section.visible {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2.5rem;
     margin-bottom: 2rem;
+    align-items: start; /* ensure all footer columns align to the top */
+}
+
+.footer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
 }
 
 .footer-section h3,
 .footer-section h4 {
-    margin-bottom: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
     color: var(--light-text);
 }
 
@@ -1427,6 +1443,35 @@ section.visible {
     align-items: center;
     justify-content: center;
     white-space: nowrap;
+}
+
+.footer-content .footer-section:nth-child(1) {
+    text-align: center;
+}
+
+/* Quick Links on the left, Services on the right across all viewports */
+.footer-content .footer-section:nth-child(2) {
+    text-align: left;
+    justify-self: start;
+}
+
+.footer-content .footer-section:nth-child(3) {
+    text-align: right;
+    justify-self: end;
+}
+
+.footer-content .footer-section:nth-child(2) ul {
+    text-align: left;
+}
+
+.footer-content .footer-section:nth-child(3) ul {
+    text-align: right;
+}
+
+.footer-social-links {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: var(--spacing-sm);
 }
 
 .footer-social-links a {
@@ -1474,19 +1519,21 @@ section.visible {
         padding: 2rem 0 1rem;
     }
 
+    /* Keep a two-column footer even on narrower screens so layout stays consistent */
     .footer-content {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
         gap: var(--spacing-md);
-        text-align: center;
+        text-align: left;
     }
 
     .footer-section {
         padding: 0 var(--spacing-md);
     }
 
+    /* Headings inherit alignment from their section; brand will be centered explicitly */
     .footer-section h3,
     .footer-section h4 {
-        text-align: center;
+        text-align: left;
     }
 
     .footer-section ul {
@@ -1516,12 +1563,36 @@ section.visible {
     }
 }
 
+/* Enforce a stable two-column footer layout and grid areas across all viewports
+   so the Quick Links (left) and Services (right) remain aligned consistently. */
+.footer-content {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-areas:
+        "brand brand"
+        "links services"
+        "connect connect";
+    gap: var(--spacing-md) !important;
+    align-items: start !important;
+}
+
+.footer-content .footer-section:nth-child(1) { grid-area: brand; text-align: center; }
+.footer-content .footer-section:nth-child(2) { grid-area: links; text-align: left; justify-self: start; }
+.footer-content .footer-section:nth-child(3) { grid-area: services; text-align: right; justify-self: end; }
+.footer-content .footer-section:nth-child(4) { grid-area: connect; text-align: center; grid-column: 1 / -1; }
+
+/* Ensure lists within the Quick Links and Services adopt the column text-align */
+.footer-content .footer-section:nth-child(2) ul { text-align: left; }
+.footer-content .footer-section:nth-child(3) ul { text-align: right; }
+
 @media (max-width: 480px) {
     .footer {
         padding: 1.5rem 0 1rem;
     }
 
+    /* Maintain two-column layout on very small screens for consistent appearance */
     .footer-content {
+        grid-template-columns: 1fr 1fr;
         gap: var(--spacing-sm);
     }
 
@@ -1600,74 +1671,59 @@ section.visible {
     .hero::before {
         display: none;
     }
+
+    /* Make About image scale and stack nicely on very small phones */
+    .about-grid {
+        grid-template-columns: 1fr !important;
+        gap: var(--spacing-md) !important;
+        align-items: start;
+    }
+
+    /* Place image below the text and center it with a controlled max width */
+    .about-text {
+        order: 0;
+        text-align: left;
+    }
+
+    .about-image {
+        order: 1;
+        justify-self: center;
+        margin: var(--spacing-md) auto 0 auto;
+        width: 100%;
+        max-width: 360px;
+    }
+
+    .about-image img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        object-fit: cover;
+        display: block;
+    }
 }
 
-/* Phone layout: Quick Links left, Services right (grid areas for stability) */
+/* Phone layout tweaks: keep two-column grid and align headings consistently */
 @media (max-width: 480px) {
     .footer-content {
-        display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-areas:
-            "brand brand"
-            "links services"
-            "connect connect";
         gap: var(--spacing-md);
         align-items: start;
     }
 
-    .footer-content .footer-section:nth-child(1) { grid-area: brand; }
-    .footer-content .footer-section:nth-child(2) { grid-area: links; }
-    .footer-content .footer-section:nth-child(3) { grid-area: services; }
-    .footer-content .footer-section:nth-child(4) { grid-area: connect; }
+    .footer-content .footer-section:nth-child(1) { text-align: center; padding-bottom: var(--spacing-sm); }
+    .footer-content .footer-section:nth-child(2) { text-align: left; }
+    .footer-content .footer-section:nth-child(3) { text-align: right; }
+    .footer-content .footer-section:nth-child(4) { text-align: center; margin-top: var(--spacing-sm); }
 
-    /* Brand spans full width on top */
-    .footer-content .footer-section:nth-child(1) {
-        text-align: left;
-        padding-bottom: var(--spacing-sm);
-    }
+    .footer-content .footer-section:nth-child(2) ul { text-align: left; margin: 0; }
+    .footer-content .footer-section:nth-child(3) ul { text-align: right; margin: 0; }
 
-    /* Quick Links left column */
-    .footer-content .footer-section:nth-child(2) {
-        text-align: left;
-    }
-
-    /* Services right column */
-    .footer-content .footer-section:nth-child(3) {
-        text-align: right;
-    }
-
-    /* Connect spans full width below */
-    .footer-content .footer-section:nth-child(4) {
-        text-align: center;
-        margin-top: var(--spacing-sm);
-    }
-
-    /* Ensure lists align visually within their columns */
-    .footer-content .footer-section:nth-child(2) ul {
-        text-align: left;
-        display: block;
-        margin: 0;
-    }
-
-    .footer-content .footer-section:nth-child(3) ul {
-        text-align: right;
-        display: block;
-        margin: 0;
-    }
-
-    /* Keep contact icons horizontal on phones; allow horizontal scroll if needed */
     .footer-content .footer-section:nth-child(4) .footer-social-links {
-        justify-content: center;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        gap: var(--spacing-sm);
+        justify-content: center; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; gap: var(--spacing-sm);
     }
 
-    .footer-content .footer-section:nth-child(4) .footer-social-links a {
-        flex: 0 0 auto;
-        margin-right: var(--spacing-sm);
-    }
+    .footer-content .footer-section:nth-child(4) .footer-social-links a { flex: 0 0 auto; margin-right: var(--spacing-sm); }
 }
 
 /* ============================
@@ -1777,9 +1833,8 @@ section.visible {
         grid-template-columns: 1fr;
     }
 
-    .about-grid {
-        grid-template-columns: 1fr;
-    }
+    /* Keep about-grid untouched here so the small-screen rule that keeps the image on the right
+       (defined earlier at max-width:768) is not overridden later in the file. */
 
     .footer-content {
         grid-template-columns: 1fr;
