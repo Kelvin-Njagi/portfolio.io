@@ -43,43 +43,58 @@ function initNavigation() {
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('main > section');
 
+    // Function to show section
+    function showSection(targetId) {
+        // Hide all sections
+        sections.forEach(section => {
+            section.classList.remove('visible');
+            section.classList.add('hidden');
+        });
+
+        // Show target section
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+            targetSection.classList.remove('hidden');
+            targetSection.classList.add('visible');
+            
+            // Smooth scroll to top
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 50);
+        }
+
+        // Update active nav link
+        navLinks.forEach(l => l.classList.remove('active'));
+        const activeLink = document.querySelector(`[data-section="${targetId}"]`);
+        if (activeLink) {
+            activeLink.classList.add('active');
+        }
+    }
+
+    // Handle nav links
     navLinks.forEach(link => {
         link.addEventListener('click', function(event) {
             event.preventDefault();
-
             const targetId = this.getAttribute('data-section');
-            
-            // Remove active class from all links
-            navLinks.forEach(l => l.classList.remove('active'));
-            // Add active class to clicked link
-            this.classList.add('active');
-            
-            // Hide all sections
-            sections.forEach(section => {
-                section.classList.remove('visible');
-                section.classList.add('hidden');
-            });
-
-            // Show target section
-            const targetSection = document.getElementById(targetId);
-            if (targetSection) {
-                targetSection.classList.remove('hidden');
-                targetSection.classList.add('visible');
-                
-                // Smooth scroll to top
-                setTimeout(() => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 50);
-            }
+            showSection(targetId);
         });
     });
 
+    // Handle other anchor links (like buttons)
+    const anchorLinks = document.querySelectorAll('a[href^="#"]');
+    anchorLinks.forEach(link => {
+        if (!link.classList.contains('nav-link')) { // Avoid duplicates
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                const href = this.getAttribute('href');
+                const targetId = href.substring(1);
+                showSection(targetId);
+            });
+        }
+    });
+
     // Set initial active state to Home tab
-    const homeLink = document.querySelector('[data-section="home"]');
-    if (homeLink) {
-        homeLink.classList.add('active');
-        document.getElementById('home').classList.add('visible');
-    }
+    showSection('home');
 }
 
 // ============================
