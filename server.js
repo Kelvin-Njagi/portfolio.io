@@ -243,6 +243,30 @@ app.get('/api/portfolio', (req, res) => {
     });
 });
 
+// Download document route (forces attach download)
+app.get('/download/:filename', (req, res, next) => {
+    const allowedFiles = [
+        'CV_KELVIN_NJAGI.pdf',
+        'IBM_Cybersecurity_Certificate.pdf',
+        'IBM_AI_Certificate.pdf'
+    ];
+
+    const { filename } = req.params;
+    if (!allowedFiles.includes(filename)) {
+        return res.status(404).json({
+            success: false,
+            message: 'Document not found'
+        });
+    }
+
+    const filePath = path.join(__dirname, 'documents', filename);
+    res.download(filePath, filename, (err) => {
+        if (err) {
+            next(err);
+        }
+    });
+});
+
 // 404 Error Handler
 app.use((req, res) => {
     res.status(404).json({
