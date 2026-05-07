@@ -48,6 +48,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // Static files
 app.use(express.static(path.join(__dirname)));
+app.use('/documents', express.static(path.join(__dirname, 'documents')));
 
 // ============================
 // ROUTES
